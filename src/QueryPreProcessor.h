@@ -162,6 +162,7 @@ private:
 
 		for(int i = 0 ; i < queryParts.size() ; i ++)
 		{
+			cout<< "Query part: " << queryParts[i] << endl;
 			switch(checkType(queryParts[i]))
 			{
 				case 0:
@@ -204,10 +205,10 @@ private:
 			}
 		}
 
-		iter = tree->getRoot();
-
 		if(selectNodes.size() > 0)
 		{
+			iter = tree->getRoot();
+
 			node = new SuchMainNode();
 			treeNode = new tree_node_<PQLNode>(*node);
 			iter = tree->appendChild(iter, *treeNode);
@@ -391,6 +392,9 @@ private:
 
 	int checkType(string queryPart)
 	{
+		//cout << "[1] " << queryPart.find("select") << endl;
+		//cout << "[2] " << queryPart.find("such that") << endl;
+
 		if(queryPart.find("select") < queryPart.length()) return 1; //select
 		if(queryPart.find("such that") < queryPart.length()) return 2; //such that
 
@@ -412,6 +416,8 @@ private:
 
 		//cout<< "START " << aktPos << " " << lastPos << " " << queryLength << endl;
 
+		//cout << "Q: " << query << endl;
+
 		findPositions(query, tokensElems);
 
 		return queryParts;
@@ -419,27 +425,36 @@ private:
 
 	void findPositions(string query, vector<string> tokens)
 	{
+		bool isnext = false;
 		int tmpPos;
 		for(int i = 0 ; i < tokens.size() ; i ++)
 		{
 			tmpPos = query.find(tokens[i], aktPos);
-			//cout << i << " -> " << tokens[i] << " " << aktPos << " " << lastPos << endl;
-			if(tmpPos < lastPos && tmpPos < query.length())
+			//cout << i << " -> " << tokens[i] << " " << aktPos << " " << lastPos << " " << tmpPos << endl;
+			if(tmpPos > 0 && tmpPos < lastPos && tmpPos < query.length())
 			{
+				isnext = true;
 				lastPos = tmpPos;
 				lastToken = aktToken;
 				aktToken = tokens[i];
-				//cout << "CHANGE -> " << lastPos << "|" << tmpPos << " " << aktToken << endl;
+				//cout << "CHANGE -> " << lastPos << "|" << tmpPos << " " << aktToken << " " << lastToken << endl;
 			}
 		}
 
 		//cout<< "NEXT? " << aktPos << " " << lastPos << " " << aktToken.length() << " " << queryLength << endl;
 
-		queryParts.push_back(query.substr(aktPos-lastToken.length(),lastPos));
+		if(isnext)
+			queryParts.push_back(query.substr(aktPos-lastToken.length(),lastPos));
+		else
+			queryParts.push_back(query);
+
+		//writeVector(queryParts);
 
 		query = query.substr(lastPos,queryLength);
 		//aktPos = lastPos;// + aktToken.length();
 		//lastPos = query.length();
+
+		//cout << query << endl;
 
 		//cout<< "NEXT? " << aktPos << " " << lastPos << " " << aktToken.length() << " " << queryLength << endl;
 

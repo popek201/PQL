@@ -25,6 +25,11 @@ public:
 		this->type = "query";
 		this->nodeType = "query";
 	}
+
+	void dupa()
+	{
+		cout << " DUPA ";
+	}
 };
 
 class ResultMainNode: public PQLNode {
@@ -42,12 +47,15 @@ public:
 		this->nodeType = "result";
 	}
 
+	ResultNode(PQLNode& node) {}
+
 	ResultNode(Field* field) {
 		this->type = "result";
 		this->nodeType = "result";
 		this->field = field;
 	}
 
+public:
     Field* getField() {
 		return field;
 	}

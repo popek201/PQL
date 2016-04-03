@@ -64,13 +64,31 @@ int main(int argc, char** args) {
 	*/
 
 
-	string a = "assign a, a2; prog_line p; select a, p.procname such that parent(a,2) and follows*(\"ala\",a2) such that uses(_,p) such that modifies*(2,p);";
+	//string a = "assign a, a2; prog_line p; select a, p.procname such that parent(a,2) and follows*(\"ala\",a2) such that uses(_,p) such that modifies*(2,p);";
+	//string a = "assign a; select a such that follows(a,\"a\") such that parent(a,a);";
+	string a = "assign a; select a such that modifies(a,\"2\");";
 
-	cout << a << endl;
+	cout << "**** ZAPYTANIE **************************************************" << endl;
+	cout << a << endl << endl;
+
+	cout << "**** DRZEWO *****************************************************" << endl;
 	QueryPreProcessor* que = new QueryPreProcessor();
 	que->parseQuery(a);
 
-	que->getTree()->printTree();
+	tree<tree_node_<PQLNode>>::iterator iter;
+	PQLTree* tree = que->getTree();
+	tree->printTree();
+
+	cout << endl;
+	cout << "**** KONIEC *****************************************************" << endl;
+
+	//cout << tree->getRoot()->data.type << endl;
+
+	//PQLNode p = tree->getRoot()->data;
+	//cout << typename;
+	//cout << endl;
+	//ResultNode q = static_cast<ResultNode>(tree->getRoot()->first_child->first_child->data.type);
+	//q.getField()->printField();
 
 	return 0;
 }
