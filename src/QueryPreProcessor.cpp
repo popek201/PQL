@@ -11,12 +11,13 @@
 using namespace std;
 
 QueryPreProcessor::QueryPreProcessor() {
-	// TODO Auto-generated constructor stub
-
+	matcher = new Matcher();
+	exc = new Exceptions();
 }
 
 QueryPreProcessor::~QueryPreProcessor() {
-	// TODO Auto-generated destructor stub
+	delete matcher;
+	delete exc;
 }
 
 void QueryPreProcessor::parseQuery(string query) {
@@ -35,7 +36,7 @@ void QueryPreProcessor::parseQuery(string query) {
 	delete m;
 
 	if(query_part.size() == 0) {
-		throwException();
+		exc->throwException();
 	}
 
 	//writeVector(result_part);
@@ -48,7 +49,7 @@ void QueryPreProcessor::parseQuery(string query) {
 	vector<Field> fields = makeFields(result_part);
 	setFields(fields);
 
-	writeVector(query_part);
+	//writeVector(query_part);
 
 	makeTree(query_part);
 	/*

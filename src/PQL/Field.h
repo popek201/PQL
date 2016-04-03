@@ -15,23 +15,29 @@ using namespace std;
 class Field {
 public:
 	Field();
-	Field(string type, string value, bool name, bool val, bool stmt);
+	Field(string type, string value);
+	Field(string type, string value, bool procName, bool varName, bool val, bool stmt);
 	virtual ~Field();
-	bool isName() const;
-	void setName(bool name);
-	bool isStmt() const;
+	bool isStmt();
 	void setStmt(bool stmt);
-	const string& getType() const;
-	void setType(const string& type);
-	bool isVal() const;
+	string& getType();
+	void setType(string& type);
+	bool isVal();
 	void setVal(bool val);
-	const string& getValue() const;
-	void setValue(const string& value);
+	string& getValue();
+	void setValue(string& value);
+	bool isProcName();
+	void setProcName(bool procName);
+	bool isVarName();
+	void setVarName(bool varName);
+	string printField();
+
 
 private:
 	string type;
 	string value;
-	bool name; // DEFAULT FALSE
+	bool procName; // DEFAULT FALSE
+	bool varName; // DEFAULT FALSE
 	bool val; // DEFAULT FALSE
 	bool stmt; // DEFAULT FALSE
 };

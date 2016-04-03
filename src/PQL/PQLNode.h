@@ -11,10 +11,12 @@
 #include <string>
 #include "Field.h"
 
+using namespace std;
+
 class PQLNode {
 public:
-	std::string type; // query (root), result, suchthat, with, pattern
-	std::string nodeType;
+	string type; // query (root), result, suchthat, with, pattern
+	string nodeType;
 };
 
 class QueryNode: public PQLNode {
@@ -58,7 +60,6 @@ private:
 	Field* field;
 };
 
-
 class SuchMainNode: public PQLNode {
 public:
 	SuchMainNode() {
@@ -75,7 +76,7 @@ public:
 		this->star = false;
 	}
 
-	SuchNode(std::string suchtype, Field* atr1, Field* atr2, bool star) {
+	SuchNode(string suchtype, Field* atr1, Field* atr2, bool star) {
 		this->type = "such";
 		this->nodeType = suchtype;
 		this->suchtype = suchtype;
@@ -108,16 +109,16 @@ public:
 		this->star = star;
 	}
 
-	std::string& getSuchType() {
+	string& getSuchType() {
 		return suchtype;
 	}
 
-	void setSuchType(std::string& suchtype) {
+	void setSuchType(string& suchtype) {
 		this->suchtype = suchtype;
 	}
 
 private:
-	std::string suchtype; // parent, follows, modifies, uses, affects, next, calls
+	string suchtype; // parent, follows, modifies, uses, affects, next, calls
 	Field* attribute1; // 1st attribute in function
 	Field* attribute2; // 2nd attribute in function
 	bool star; // function with star or not - DEFAULT NOT

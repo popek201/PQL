@@ -5,18 +5,32 @@
  *      Author: Popek
  */
 
+#include <iostream>
+#include <sstream>
 #include "Field.h"
 
 Field::Field() {
-	this->name = false;
+	this->procName = false;
+	this->varName = false;
 	this->val = false;
 	this->stmt = false;
 }
 
-Field::Field(string type, string value, bool name, bool val, bool stmt) {
+Field::Field(string type, string value) {
 	this->type = type;
 	this->value = value;
-	this->name = name;
+	this->procName = false;
+	this->varName = false;
+	this->val = false;
+	this->stmt = false;
+}
+
+Field::Field(string type, string value, bool procName, bool varName, bool val,
+		bool stmt) {
+	this->type = type;
+	this->value = value;
+	this->procName = procName;
+	this->varName = varName;
 	this->val = val;
 	this->stmt = stmt;
 }
@@ -25,15 +39,7 @@ Field::~Field() {
 	// TODO Auto-generated destructor stub
 }
 
-bool Field::isName() const {
-	return name;
-}
-
-void Field::setName(bool name) {
-	this->name = name;
-}
-
-bool Field::isStmt() const {
+bool Field::isStmt() {
 	return stmt;
 }
 
@@ -41,15 +47,15 @@ void Field::setStmt(bool stmt) {
 	this->stmt = stmt;
 }
 
-const string& Field::getType() const {
+string& Field::getType() {
 	return type;
 }
 
-void Field::setType(const string& type) {
+void Field::setType(string& type) {
 	this->type = type;
 }
 
-bool Field::isVal() const {
+bool Field::isVal() {
 	return val;
 }
 
@@ -57,10 +63,33 @@ void Field::setVal(bool val) {
 	this->val = val;
 }
 
-const string& Field::getValue() const {
+string& Field::getValue() {
 	return value;
 }
 
-void Field::setValue(const string& value) {
+void Field::setValue(string& value) {
 	this->value = value;
+}
+
+bool Field::isProcName() {
+	return procName;
+}
+
+void Field::setProcName(bool procName) {
+	this->procName = procName;
+}
+
+bool Field::isVarName() {
+	return varName;
+}
+
+void Field::setVarName(bool varName) {
+	this->varName = varName;
+}
+
+string Field::printField()
+{
+	stringstream fieldText;
+	fieldText << "Field: [" << this->type << " " << this->value << "] {procName: " << this->procName << ", varName: " << this->varName << ", stmt#: " << this->stmt << ", value: " << this->val << "}" << endl;
+	return fieldText.str();
 }

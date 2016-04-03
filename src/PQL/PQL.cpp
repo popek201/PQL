@@ -64,10 +64,13 @@ int main(int argc, char** args) {
 	*/
 
 
-	string a = "assign a, a2; prog_line p; select a, p.procname such that parent(a,2) and follows*(_,a) such that uses(_,_);";
+	string a = "assign a, a2; prog_line p; select a, p.procname such that parent(a,2) and follows*(\"ala\",a2) such that uses(_,p) such that modifies*(2,p);";
 
+	cout << a << endl;
 	QueryPreProcessor* que = new QueryPreProcessor();
 	que->parseQuery(a);
+
+	que->getTree()->printTree();
 
 	return 0;
 }
